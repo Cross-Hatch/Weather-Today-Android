@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         weatherDescription = findViewById(R.id.description_weather);
         searchBox = findViewById(R.id.search_box);
 
+
         mQueue = Volley.newRequestQueue(this);
 
 
