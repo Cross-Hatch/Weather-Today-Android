@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView weather_icon;
     private Button button;
     private RequestQueue mQueue;
+    private String APIKEY = "68907bf609585ee2ef82afc4cdc53829";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +50,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 jsonParse();
                 Toast.makeText(MainActivity.this,"Clicked",Toast.LENGTH_SHORT).show();
+
             }
         });
     }
     //Setting our parse method
     private void jsonParse(){
-        String url = "https://api.openweathermap.org/data/2.5/weather?q=Toronto&units=metric&appid=68907bf609585ee2ef82afc4cdc53829";
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=Toronto&appid="+APIKEY+"&units=metric";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -64,12 +66,11 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonobj = response.getJSONObject("main");
                     //Choosing the index i want (in this case it's the temperature
 //                    JSONObject temp = jsonobj.getJSONObject("temp");
+                    int tempint = (int) jsonobj.getDouble("temp");
+                   String temp_string = Integer.toString(tempint);
+                   Log.d("prob", temp_string);
 
-                   double temp_string = jsonobj.getDouble("temp");
-                    Log.d("went","button"+temp_string);
-                    System.out.println(temp_string);
-
-                    //temperature.append(temp_string);
+                    temperature.setText(tempint+"°");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
