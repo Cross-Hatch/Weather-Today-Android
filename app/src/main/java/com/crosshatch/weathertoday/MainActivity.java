@@ -64,14 +64,19 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     //Getting the array i want from the JSON
+                    //For temperature
                     JSONObject jsonobj = response.getJSONObject("main");
-                    //Choosing the index i want (in this case it's the temperature
                     int tempint = (int) jsonobj.getDouble("temp");
                     temperature.setText(tempint+"°");
+                    //For Description
                     JSONArray weather = response.getJSONArray("weather");
                     JSONObject objwet = weather.getJSONObject(0);
                     String desc = objwet.getString("description");
                     description.setText(desc);
+                    //For City name
+                    //JSONArray cname = response.getJSONArray("name");
+                    String name = (String) response.getString("name");
+                    cityName.setText(name);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
