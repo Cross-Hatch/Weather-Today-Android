@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //Setting our parse method
     private void jsonParse(){
-        String url = "https://api.openweathermap.org/data/2.5/weather?q=Toronto&appid="+APIKEY+"&units=metric";
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=Accra&appid="+APIKEY+"&units=metric";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -65,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
                     //Getting the array i want from the JSON
                     JSONObject jsonobj = response.getJSONObject("main");
                     //Choosing the index i want (in this case it's the temperature
-//                    JSONObject temp = jsonobj.getJSONObject("temp");
                     int tempint = (int) jsonobj.getDouble("temp");
-                   String temp_string = Integer.toString(tempint);
-                   Log.d("prob", temp_string);
-
                     temperature.setText(tempint+"°");
+                    JSONArray weather = response.getJSONArray("weather");
+                    JSONObject objwet = weather.getJSONObject(0);
+                    String desc = objwet.getString("description");
+                    description.setText(desc);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
